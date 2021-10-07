@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import Head from 'next/head';
 import Layout from '../../Components/Layout';
 import ProductItem from '../../Components/ProductItem';
 
@@ -16,11 +17,13 @@ const productsSectionStyles = css`
 export default function Products(props) {
   return (
     <Layout>
+      <Head>
+        <title>Products Page!</title>
+      </Head>
       <div>Products Page!</div>
       <section css={productsSectionStyles}>
-        <ProductItem />
-        <ProductItem />
-        <ProductItem />
+        {console.log(props.productsArrayOObj[0].img)}
+        <ProductItem product={props.productsArrayOObj[0]} />
       </section>
     </Layout>
   );
