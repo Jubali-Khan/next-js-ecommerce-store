@@ -47,7 +47,7 @@ export default function Header() {
             </a>
           </Link>
         </section>
-        <Link href="/">
+        <Link href="/shoppingCart">
           <a>
             <h3>ShoppingCart</h3>
           </a>

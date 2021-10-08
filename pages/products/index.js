@@ -24,6 +24,11 @@ export default function Products(props) {
       <section css={productsSectionStyles}>
         {console.log(props.productsArrayOObj[0].img)}
         <ProductItem product={props.productsArrayOObj[0]} />
+        <ProductItem product={props.productsArrayOObj[0]} />
+        <ProductItem product={props.productsArrayOObj[0]} />
+        <ProductItem product={props.productsArrayOObj[0]} />
+        <ProductItem product={props.productsArrayOObj[0]} />
+        <ProductItem product={props.productsArrayOObj[0]} />
       </section>
     </Layout>
   );

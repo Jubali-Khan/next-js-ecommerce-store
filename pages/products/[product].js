@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import AddToCartSection from '../../Components/AddToCartSection';
 import Layout from '../../Components/Layout';
 import sampleImage from '../../public/images/tablet.jpg';
 
@@ -14,7 +15,7 @@ const mainStyles = css`
   align-content: stretch;
 `;
 
-const TextAndCheckoutSectionStyles = css`
+const TextAndAddToCartSectionStyles = css`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -28,26 +29,31 @@ const TextAndCheckoutSectionStyles = css`
   padding: 2% 4%;
 `;
 
+const imageSectionStyles = css`
+  margin: auto;
+`;
+
 export default function Product(props) {
   return (
     <Layout>
       <main css={mainStyles}>
-        <section id="ImageSection">
+        <section id="ImageSection" css={imageSectionStyles}>
           <Image src={sampleImage} width="300px" height="300px" />
         </section>
-        <section id="TextAndCheckoutSection" css={TextAndCheckoutSectionStyles}>
+        <section
+          id="TextAndAddToCartSection"
+          css={TextAndAddToCartSectionStyles}
+        >
           <section id="ProductTextSection">
             <h4>Product Title</h4>
-            <p>Product Description</p>
+            {/* <p>
+              Product Description: efemkfmkl enfskjnfr neflsenfknfenfldefemkfmkl
+              enfskjnfr neflsenfknfenfldefemkfmkl enfskjnfr
+              neflsenfknfenfldefemkfm
+            </p> */}
+            <p>Product Description:</p>
           </section>
-          <section id="CheckoutSection">
-            <select>
-              <option>1</option>
-              <option>1</option>
-              <option>1</option>
-            </select>
-            <button>add to cart</button>
-          </section>
+          <AddToCartSection />
         </section>
       </main>
     </Layout>
