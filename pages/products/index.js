@@ -23,9 +23,16 @@ export default function Products(props) {
       <div>Products Page!</div>
       <section css={productsSectionStyles}>
         {console.log(props.productsArrayOObj[0].img)}
+        {/* <ProductItem product={props.productsArrayOObj[0]} />
         <ProductItem product={props.productsArrayOObj[0]} />
-        <ProductItem product={props.productsArrayOObj[0]} />
-        <ProductItem product={props.productsArrayOObj[0]} />
+        <ProductItem product={props.productsArrayOObj[0]} /> */}
+
+        {props.productsArrayOObj.map((productObj) => (
+          <ProductItem
+            key={`ProductItem-id${productObj.id}`}
+            product={productObj}
+          />
+        ))}
       </section>
     </Layout>
   );

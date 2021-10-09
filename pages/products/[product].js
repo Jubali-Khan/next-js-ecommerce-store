@@ -53,7 +53,7 @@ export default function Product(props) {
             </p> */}
             <p>Product Description:</p>
           </section>
-          <AddToCartSection />
+          <AddToCartSection productId={1} />
         </section>
       </main>
     </Layout>
