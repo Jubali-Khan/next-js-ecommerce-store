@@ -26,9 +26,6 @@ export default function Products(props) {
         <ProductItem product={props.productsArrayOObj[0]} />
         <ProductItem product={props.productsArrayOObj[0]} />
         <ProductItem product={props.productsArrayOObj[0]} />
-        <ProductItem product={props.productsArrayOObj[0]} />
-        <ProductItem product={props.productsArrayOObj[0]} />
-        <ProductItem product={props.productsArrayOObj[0]} />
       </section>
     </Layout>
   );

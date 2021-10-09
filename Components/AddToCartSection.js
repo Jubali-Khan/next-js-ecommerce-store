@@ -1,5 +1,14 @@
+import { css } from '@emotion/react';
 import Cookies from 'js-cookie';
+import { useState } from 'react';
 
+const addToCartSectionStyles = css`
+  border: 1px solid black;
+  padding: 5%;
+`;
+
+//
+//
 export function getParsedCookie(key) {
   try {
     return JSON.parse(Cookies.get(key));
@@ -17,28 +26,47 @@ export function setParsedCookie(key, value) {
 //
 //
 export default function AddToCartSection(props) {
-  const cookieToSet = [{ productId: 1, quantity: 5 }];
+  const [quantity, setQuantity] = useState(1);
+  // console.log('typeof quantity: ', typeof quantity);
+  // console.log('quantity: ', quantity);
+
+  const cookieToAdd = { productId: 1, quantity: quantity };
   function clickHandler() {
     // 1. check if there is a cookie
-    const cookiePresent = getParsedCookie('order');
-    console.log(cookiePresent);
+    const cookiePresent = getParsedCookie('totalOrder');
 
-    // 2. if there isn't, create one
     if (!cookiePresent) {
-      console.log('within if()');
-      setParsedCookie('order', cookieToSet);
+      // 2. if there isn't, create one
+      setParsedCookie('totalOrder', [cookieToAdd]);
     } else {
-      // modify it
+      // 3. if there is, modify it
+      const currentProductCookie = cookiePresent.find(
+        (order) => order.productId === cookieToAdd.productId,
+      );
+
+      const updatedCookie = cookiePresent.filter(
+        (order) => order.productId !== cookieToAdd.productId,
+      );
+
+      currentProductCookie.quantity += quantity;
+
+      updatedCookie.push(currentProductCookie);
+      setParsedCookie('totalOrder', updatedCookie);
     }
-    console.log(getParsedCookie('order'));
-    // 3. if there is, modify it
   }
   return (
-    <section id="AddToCartSection">
-      <select>
-        <option>1</option>
-        <option>1</option>
-        <option>1</option>
+    <section css={addToCartSectionStyles} id="AddToCartSection">
+      <select
+        value={quantity}
+        onChange={(event) => {
+          setQuantity(Number(event.currentTarget.value));
+          // console.log('event.currentTarget.value: ', event.currentTarget.value);
+          // console.log('quantity state var is always delayed: ', quantity);
+        }}
+      >
+        <option value={1}>{1}</option>
+        <option value={2}>{2}</option>
+        <option value={3}>{3}</option>
       </select>
       <button onClick={clickHandler}>add to cart</button>
     </section>
@@ -46,7 +74,7 @@ export default function AddToCartSection(props) {
 }
 
 /* This section should:
-1. check if there is a cookie for this product already created (= an OrderItem for it)
+1. check if there is a cookie for this product already created (= an totalOrderItem for it)
 2. if there isn't, create one when 'add to cart' is clicked
 3. if there is, add info to it when 'add to cart' is clicked
 */
