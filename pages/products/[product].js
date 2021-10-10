@@ -45,7 +45,7 @@ export default function Product(props) {
           css={TextAndAddToCartSectionStyles}
         >
           <section id="ProductTextSection">
-            <h4>Product Title</h4>
+            <h4>{props.currentProduct.name}</h4>
             {/* <p>
               Product Description: efemkfmkl enfskjnfr neflsenfknfenfldefemkfmkl
               enfskjnfr neflsenfknfenfldefemkfmkl enfskjnfr
@@ -53,9 +53,27 @@ export default function Product(props) {
             </p> */}
             <p>Product Description:</p>
           </section>
-          <AddToCartSection productId={1} />
+          <AddToCartSection productId={props.currentProduct.id} />
         </section>
       </main>
     </Layout>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { productsArrayOObj } = await import('../../util/database');
+  console.log('productsArrayOObj: ', productsArrayOObj);
+  const idFromURL = context.query.product;
+  console.log('idFromURL: ', idFromURL);
+  const currentProduct = productsArrayOObj.find(
+    (productObj) => productObj.id === Number(idFromURL),
+  );
+  console.log('currentProduct: ', currentProduct);
+  console.log('currentProduct.id: ', currentProduct.id);
+  console.log('typeof currentProduct.id: ', typeof currentProduct.id);
+  return {
+    props: {
+      currentProduct,
+    }, // will be passed to the page component as props
+  };
 }

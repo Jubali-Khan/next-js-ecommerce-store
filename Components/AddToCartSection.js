@@ -31,7 +31,7 @@ export default function AddToCartSection(props) {
   // console.log('quantity: ', quantity);
 
   const cookieToAdd = { productId: props.productId, quantity: quantity };
-  console.log(cookieToAdd);
+  console.log('fjbskjbf', cookieToAdd);
   function clickHandler() {
     // 1. check if there is a cookie
     const cookiePresent = getParsedCookie('totalOrder');
