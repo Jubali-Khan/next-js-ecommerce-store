@@ -15,10 +15,11 @@ export default function ProductItem(props) {
   return (
     <Link href={`/products/${props.product.id}`}>
       <section css={itemStyle}>
-        <Image src={props.product.img} width="100px" height="100px" />
+        <Image src={props.product.productImage} width="100px" height="100px" />
         <br />
         <br />
-        <div>{props.product.name}</div>
+        <div>{props.product.productTitle}</div>
+        <div>{props.product.productPrice}</div>
         <br />
       </section>
     </Link>

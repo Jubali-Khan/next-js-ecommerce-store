@@ -47,21 +47,25 @@ export default function Product(props) {
     <Layout>
       <main css={mainStyles}>
         <section id="ImageSection" css={imageSectionStyles}>
-          <Image src={props.currentProduct.img} width="300px" height="300px" />
+          <Image
+            src={props.currentProduct.productImage}
+            width="300px"
+            height="300px"
+          />
         </section>
         <section
           id="TextAndAddToCartSection"
           css={TextAndAddToCartSectionStyles}
         >
           <section id="ProductTextSection">
-            <h4 css={titleStyles}>{props.currentProduct.name}</h4>
-            <h4 css={priceStyles}>{props.currentProduct.price}</h4>
+            <h4 css={titleStyles}>{props.currentProduct.productTitle}</h4>
+            <h4 css={priceStyles}>{props.currentProduct.productPrice}</h4>
             {/* <p>
               Product Description: efemkfmkl enfskjnfr neflsenfknfenfldefemkfmkl
               enfskjnfr neflsenfknfenfldefemkfmkl enfskjnfr
               neflsenfknfenfldefemkfm
             </p> */}
-            <p>{props.currentProduct.desc}</p>
+            <p>{props.currentProduct.productDescription}</p>
           </section>
           <AddToCartSection productId={props.currentProduct.id} />
         </section>
@@ -71,19 +75,17 @@ export default function Product(props) {
 }
 
 export async function getServerSideProps(context) {
-  const { productsArrayOObj } = await import('../../util/database');
-  console.log('productsArrayOObj: ', productsArrayOObj);
+  const location = 'gSSP in products/[product].js';
+  const { getProduct } = await import('../../util/database');
+
   const idFromURL = context.query.product;
-  console.log('idFromURL: ', idFromURL);
-  const currentProduct = productsArrayOObj.find(
-    (productObj) => productObj.id === Number(idFromURL),
-  );
-  console.log('currentProduct: ', currentProduct);
-  console.log('currentProduct.id: ', currentProduct.id);
-  console.log('typeof currentProduct.id: ', typeof currentProduct.id);
+  const currentProduct = await getProduct(idFromURL);
+
+  console.log(`currentProduct in ${location}:`, currentProduct);
+
   return {
     props: {
       currentProduct,
-    }, // will be passed to the page component as props
+    },
   };
 }

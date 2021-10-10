@@ -22,12 +22,12 @@ export default function Products(props) {
       </Head>
       <div>Products Page!</div>
       <section css={productsSectionStyles}>
-        {console.log(props.productsArrayOObj[0].img)}
         {/* <ProductItem product={props.productsArrayOObj[0]} />
         <ProductItem product={props.productsArrayOObj[0]} />
         <ProductItem product={props.productsArrayOObj[0]} /> */}
 
-        {props.productsArrayOObj.map((productObj) => (
+        {/* {console.log(props.products)} */}
+        {props.products.map((productObj) => (
           <ProductItem
             key={`ProductItem-id${productObj.id}`}
             product={productObj}
@@ -39,11 +39,15 @@ export default function Products(props) {
 }
 
 export async function getServerSideProps() {
-  const { productsArrayOObj } = await import('../../util/database');
-  console.log(productsArrayOObj);
+  const location = 'gSSP in products/index';
+  const { getProducts } = await import('../../util/database');
+
+  const products = await getProducts();
+
+  console.log(`products in ${location}:`, products);
   return {
     props: {
-      productsArrayOObj,
+      products,
     },
   };
 }

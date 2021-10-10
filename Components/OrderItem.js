@@ -15,7 +15,7 @@ const orderItemStyles = css`
   border-radius: 2%;
 `;
 
-const checkoutSectionStyles = css`
+const ButtonsSectionStyles = css`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -44,22 +44,17 @@ export default function OrderItem(props) {
         <Image src={sampleImage} width="120px" height="120px" />
         <section id="ProductTextSection">
           <h4>Product Title</h4>
-          {/* <p>
-              Product Description: efemkfmkl enfskjnfr neflsenfknfenfldefemkfmkl
-              enfskjnfr neflsenfknfenfldefemkfmkl enfskjnfr
-              neflsenfknfenfldefemkfm
-            </p> */}
-          <p>Product Description:</p>
+          <h4>Product Price</h4>
         </section>
       </div>
-      <section id="CheckoutSection" css={checkoutSectionStyles}>
+      <section id="ButtonsSection" css={ButtonsSectionStyles}>
         <select>
           <option>1</option>
           <option>1</option>
           <option>1</option>
         </select>
         <br />
-        <button>checkout</button>
+        <button>delete Item from cart</button>
       </section>
     </section>
   );
