@@ -33,25 +33,35 @@ const imageSectionStyles = css`
   margin: auto;
 `;
 
+const titleStyles = css`
+  display: inline;
+  padding: 1%;
+`;
+const priceStyles = css`
+  display: inline;
+  padding: 1%;
+`;
+
 export default function Product(props) {
   return (
     <Layout>
       <main css={mainStyles}>
         <section id="ImageSection" css={imageSectionStyles}>
-          <Image src={sampleImage} width="300px" height="300px" />
+          <Image src={props.currentProduct.img} width="300px" height="300px" />
         </section>
         <section
           id="TextAndAddToCartSection"
           css={TextAndAddToCartSectionStyles}
         >
           <section id="ProductTextSection">
-            <h4>{props.currentProduct.name}</h4>
+            <h4 css={titleStyles}>{props.currentProduct.name}</h4>
+            <h4 css={priceStyles}>{props.currentProduct.price}</h4>
             {/* <p>
               Product Description: efemkfmkl enfskjnfr neflsenfknfenfldefemkfmkl
               enfskjnfr neflsenfknfenfldefemkfmkl enfskjnfr
               neflsenfknfenfldefemkfm
             </p> */}
-            <p>Product Description:</p>
+            <p>{props.currentProduct.desc}</p>
           </section>
           <AddToCartSection productId={props.currentProduct.id} />
         </section>
