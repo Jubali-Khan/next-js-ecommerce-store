@@ -27,11 +27,14 @@ export function setParsedCookie(key, value) {
 //
 export default function AddToCartSection(props) {
   const location = 'AddToCartSection component';
-  const [quantity, setQuantity] = useState();
-  // const [independentQuantity, setIndependentQuantity] = useState(1);
+  const [quantity, setQuantity] = useState('1');
   console.log('quantity state var: ', quantity);
 
-  const cookieToAdd = { productId: props.productId, quantity: 1 };
+  const cookieToAdd = { productId: props.productId, quantity: quantity };
+
+  // useEffect(() => {
+  //   setQuantity(1);
+  // }, []);
 
   function clickHandler() {
     // 1. check if there is a cookie
@@ -40,6 +43,7 @@ export default function AddToCartSection(props) {
     if (!cookiePresent) {
       // 2. if there isn't, create one
       setParsedCookie('totalOrder', [cookieToAdd]);
+      setQuantity(1);
       console.log('cookie been set');
     } else {
       // 3. if there is, modify it by first adding this products order object
@@ -48,35 +52,38 @@ export default function AddToCartSection(props) {
       const currentProductCookie = cookiePresent.find(
         (order) => order.productId === cookieToAdd.productId,
       );
-      console.log('currentProductCookie: ', currentProductCookie);
+      // console.log('currentProductCookie: ', currentProductCookie);
 
       const updatedCookie = cookiePresent.filter(
         (order) => order.productId !== cookieToAdd.productId,
       );
 
-      console.log(
-        `currentProductCookie.quantity: ${currentProductCookie.quantity} \n quantity: ${quantity}`,
-      );
+      // console.log(
+      //   `currentProductCookie.quantity: ${currentProductCookie.quantity} \n quantity: ${quantity}`,
+      // );
 
       currentProductCookie.quantity += quantity;
 
       updatedCookie.push(currentProductCookie);
-      console.log('updatedCookie modified: ', updatedCookie);
+      // console.log('updatedCookie modified: ', updatedCookie);
 
       setParsedCookie('totalOrder', updatedCookie);
-      console.log('totalOrder cookie: ', getParsedCookie('totalOrder'));
+      // console.log('totalOrder cookie: ', getParsedCookie('totalOrder'));
     }
   }
   return (
     <section css={addToCartSectionStyles} id="AddToCartSection">
       <select
         value={quantity}
-        onChange={(e) => setQuantity(Number(e.currentTarget.value))}
+        onChange={(e) => {
+          setQuantity(e.currentTarget.value);
+        }}
       >
-        <option value={1}>1</option>
-        <option value={2}>2</option>
-        <option value={3}>3</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
       </select>
+      {}
       <button onClick={clickHandler}>add to cart</button>
     </section>
   );
