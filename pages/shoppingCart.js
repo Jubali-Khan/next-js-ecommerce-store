@@ -7,7 +7,7 @@ import OrderSummary from '../Components/OrderSummary';
 // We then used this information to dynamically generate OrderItems
 // Each of which will be passed a prop
 
-export default function shoppingCart(props) {
+export default function ShoppingCart(props) {
   return (
     <Layout>
       <h3>Items added to cart:</h3>

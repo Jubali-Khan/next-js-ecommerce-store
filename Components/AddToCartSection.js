@@ -26,49 +26,65 @@ export function setParsedCookie(key, value) {
 //
 //
 export default function AddToCartSection(props) {
-  const location = 'AddToCartSection component';
-  const [quantity, setQuantity] = useState('1');
+  // const location = 'AddToCartSection component';
+  const [quantity, setQuantity] = useState();
   console.log('quantity state var: ', quantity);
 
-  const cookieToAdd = { productId: props.productId, quantity: quantity };
-
-  // useEffect(() => {
-  //   setQuantity(1);
-  // }, []);
+  // This and having quantity () deals with the chrome bug, but as a result the select option is 1 only the first time an option is selected, after that it's whatever was last selected
+  useEffect(() => {
+    return setQuantity('1');
+  }, []);
 
   function clickHandler() {
     // 1. check if there is a cookie
-    const cookiePresent = getParsedCookie('totalOrder');
+    const presentCookieArrOObj = getParsedCookie('totalOrder'); // either has a cookie or is undefined
 
-    if (!cookiePresent) {
+    if (!presentCookieArrOObj) {
+      const orderObjTemplate = {
+        productId: props.productId,
+        quantity: Number(quantity),
+      };
       // 2. if there isn't, create one
-      setParsedCookie('totalOrder', [cookieToAdd]);
-      setQuantity(1);
+      setParsedCookie('totalOrder', [orderObjTemplate]);
       console.log('cookie been set');
     } else {
-      // 3. if there is, modify it by first adding this products order object
-      setParsedCookie('totalOrder', cookiePresent.push(cookieToAdd));
+      // 0. We start by creating the template object for this product
+      const orderObjToUpdate = {
+        productId: props.productId,
+        quantity: 0,
+      };
 
-      const currentProductCookie = cookiePresent.find(
-        (order) => order.productId === cookieToAdd.productId,
+      // 1. If the cookie doesn't already have the order obj for this product, we push it to the cookie
+      if (
+        !presentCookieArrOObj.find(
+          (orderObj) => orderObj.productId === props.productId,
+        )
+      ) {
+        presentCookieArrOObj.push(orderObjToUpdate);
+        console.log('IN IF presentCookieArrOObj: ', presentCookieArrOObj);
+      }
+
+      // 2. We then update totalOrder to a cookie that we can access and whose order quantity we can manipulate
+      setParsedCookie('totalOrder', presentCookieArrOObj);
+
+      // 3.1 split totalOrder into a singular object
+      const currentProductObj = presentCookieArrOObj.find(
+        (order) => order.productId === props.productId,
       );
-      // console.log('currentProductCookie: ', currentProductCookie);
 
-      const updatedCookie = cookiePresent.filter(
-        (order) => order.productId !== cookieToAdd.productId,
+      // 3.2 store the remainder of totalOrder in a variable
+      const updatedCookie = presentCookieArrOObj.filter(
+        (order) => order.productId !== props.productId,
       );
 
-      // console.log(
-      //   `currentProductCookie.quantity: ${currentProductCookie.quantity} \n quantity: ${quantity}`,
-      // );
+      // 4. update the quantity on the object
+      currentProductObj.quantity += Number(quantity);
 
-      currentProductCookie.quantity += quantity;
+      // 5. insert object into array of objects
+      updatedCookie.push(currentProductObj);
 
-      updatedCookie.push(currentProductCookie);
-      // console.log('updatedCookie modified: ', updatedCookie);
-
+      // 6. update totalOrder with the new value
       setParsedCookie('totalOrder', updatedCookie);
-      // console.log('totalOrder cookie: ', getParsedCookie('totalOrder'));
     }
   }
   return (
@@ -94,3 +110,10 @@ export default function AddToCartSection(props) {
 2. if there isn't, create one when 'add to cart' is clicked
 3. if there is, add info to it when 'add to cart' is clicked
 */
+
+/*
+Problems:
+1. quantity was integer, it can't be integer and the value of value={} in select
+2. there is a bug in Chrome
+3.
+  */
