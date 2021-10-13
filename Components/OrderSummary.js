@@ -9,11 +9,11 @@ function sumFinder(cookie, products) {
     const currentProd = products.find(
       (product) => product.id === order.productId,
     );
-    console.log('currentProd: ', currentProd);
+    // console.log('currentProd: ', currentProd);
     const currentProdPrice = currentProd.productPrice;
-    console.log('currentProdPrice: ', currentProdPrice);
+    // console.log('currentProdPrice: ', currentProdPrice);
     sum += order.quantity * currentProdPrice;
-    console.log('sum: ', sum);
+    // console.log('sum: ', sum);
   });
   return sum;
 }
@@ -33,18 +33,20 @@ const orderSummarySectionStyles = css`
 
 export default function OrderSummary(props) {
   const totalOrder = getParsedCookie('totalOrder') || [];
-  console.log('totalOrder: ', totalOrder);
   return (
     <section id="OrderSummarySection" css={orderSummarySectionStyles}>
-      <h3>Order Summary</h3>
-      <h3>
-        {props.products.map((prod) => (
-          <li key={`prod-${prod.id}`}>{prod.productTitle}</li>
-        ))}
-      </h3>
-
-      <h3>Sum: {sumFinder(totalOrder, props.products)}</h3>
-      <button>checkout</button>
+      <div>
+        <h3>Order Summary:</h3>
+        <h3>
+          {props.products.map((prod) => (
+            <li key={`prod-${prod.id}`}>{prod.productTitle}</li>
+          ))}
+        </h3>
+      </div>
+      <div>
+        <h3>Sum: {sumFinder(totalOrder, props.products)}</h3>
+        <button>checkout</button>
+      </div>
     </section>
   );
 }

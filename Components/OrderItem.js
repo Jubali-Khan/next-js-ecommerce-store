@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import Image from 'next/image';
 import sampleImage from '../public/images/tablet.jpg';
+import { setParsedCookie } from './AddToCartSection';
 
 const orderItemStyles = css`
   display: flex;
@@ -37,23 +38,33 @@ const divStyle = css`
 `;
 
 export default function OrderItem(props) {
+  function deleteHandler() {
+    console.log('from deleteHandler');
+    console.log('props.order.productId: ', props.order.productId);
+
+    const newTotalOrder = props.totalOrder.filter(
+      (orderObj) => orderObj.productId !== props.order.productId,
+    );
+    console.log('newTotalOrder: ', newTotalOrder);
+    setParsedCookie('totalOrder', newTotalOrder);
+  }
   return (
     <section css={orderItemStyles}>
       <div css={divStyle}>
-        <Image src={sampleImage} width="120px" height="120px" />
+        <Image src={props.product.productImage} width="120px" height="120px" />
         <section id="ProductTextSection">
-          <h4>Product Title</h4>
-          <h4>Product Price</h4>
+          <h4>{props.product.productTitle}</h4>
         </section>
       </div>
       <section id="ButtonsSection" css={ButtonsSectionStyles}>
+        <h4>{props.product.productPrice}</h4>
         <select>
           <option>1</option>
           <option>1</option>
           <option>1</option>
         </select>
         <br />
-        <button>delete Item from cart</button>
+        <button onClick={deleteHandler}>delete Item from cart</button>
       </section>
     </section>
   );

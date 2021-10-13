@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import Cookies from 'js-cookie';
 import Layout from '../Components/Layout';
 import OrderItem from '../Components/OrderItem';
@@ -16,9 +17,19 @@ export function getParsedCookie(key) {
   }
 }
 
-const totalOrder = getParsedCookie('totalOrder') || [];
+const sectionStyles = css`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: stretch;
+  align-content: stretch;
+`;
 
 export default function ShoppingCart(props) {
+  const totalOrder = getParsedCookie('totalOrder') || [];
+  console.log('totalOrder in ShoppingCart: ', totalOrder);
+
   return (
     <Layout>
       {totalOrder.length === 0 ? (
@@ -26,8 +37,27 @@ export default function ShoppingCart(props) {
       ) : (
         <h3>Items added to cart: {totalOrder.length}</h3>
       )}
-      <OrderItem />
-      <OrderSummary products={props.products} />
+      <section css={sectionStyles}>
+        <div>
+          {totalOrder.map((order) => {
+            const currentProd = props.products.find(
+              (product) => product.id === order.productId,
+            );
+
+            return (
+              <OrderItem
+                key={`OrderItem-${order.productId}`}
+                totalOrder={totalOrder}
+                order={order}
+                product={currentProd}
+              />
+            );
+          })}
+        </div>
+        <div>
+          <OrderSummary products={props.products} />
+        </div>
+      </section>
     </Layout>
   );
 }
