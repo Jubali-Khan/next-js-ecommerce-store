@@ -12,7 +12,7 @@ const orderItemStyles = css`
 
   margin: 1%;
   border: 1px solid black;
-  border-radius: 2%;
+  border-radius: 10px;
 `;
 
 const ButtonsSectionStyles = css`
@@ -34,7 +34,6 @@ const divStyle = css`
 
   margin: 1%;
   border: 1px solid black;
-  border-radius: 2%;
 `;
 
 export default function OrderItem(props) {

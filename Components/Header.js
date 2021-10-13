@@ -7,6 +7,7 @@ const headerStyle = css`
   display: flex;
   background-color: lightgreen;
   border-radius: 10px;
+  margin: 1%;
 `;
 
 const navStyles = css`
