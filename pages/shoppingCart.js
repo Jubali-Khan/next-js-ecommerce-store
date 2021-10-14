@@ -57,7 +57,7 @@ export default function ShoppingCart(props) {
           })}
         </div>
         <div>
-          <OrderSummary products={props.products} />
+          <OrderSummary totalOrder={totalOrder} products={props.products} />
         </div>
       </section>
     </Layout>
