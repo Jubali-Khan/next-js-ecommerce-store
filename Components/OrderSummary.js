@@ -47,7 +47,7 @@ export default function OrderSummary(props) {
       </div>
       <div>
         <h3>Sum: {sumFinder(props.totalOrder, props.products)}</h3>
-        <Link href="/">
+        <Link href="/checkout">
           <a>
             <button>checkout</button>
           </a>

@@ -47,19 +47,53 @@ export default function OrderItem(props) {
     props.setTotalOrder(newTotalOrder);
   }
 
-  // const [display, setDisplay] = useState('none');
-  // function updateHandler() {
-  //   if (display === 'none') {
-  //     setDisplay('block');
-  //   } else {
-  //     setDisplay('none');
-  //   }
-  // }
-  // const h2Styles = css`
-  //   display: ${display};
-  // `;
+  //
+  //
+  const [display, setDisplay] = useState('none');
+  function displayHandler() {
+    if (display === 'none') {
+      setDisplay('block');
+    } else {
+      setDisplay('none');
+    }
+  }
+  const inputStyles = css`
+    display: ${display};
+  `;
+  //
+  //
 
-  // const [newQuantity, setNewQuantity] = useState('1');
+  const [newQuantity, setNewQuantity] = useState('1');
+
+  /*
+  <OrderItem
+
+    totalOrder={totalOrder}
+    setTotalOrder={setTotalOrder}
+
+    order={order}
+    // {productId: .. , quantity: ..}
+
+    product={currentProd}
+    // { id: .. , name: ' .. ', desc: ' .. ', price:  1000, img: ' .. ',}
+  />
+  */
+  function updateHandler() {
+    const newTotalOrder = props.totalOrder.filter(
+      (orderElement) => orderElement.productId !== props.order.productId,
+    );
+    console.log('newTotalOrder: ', newTotalOrder);
+
+    const modifiedOrder = props.order;
+    modifiedOrder.quantity = Number(newQuantity);
+    console.log('modifiedOrder: ', modifiedOrder);
+
+    newTotalOrder.push(modifiedOrder);
+    console.log('newTotalOrder with modifiedOrder: ', newTotalOrder);
+
+    setParsedCookie('totalOrder', newTotalOrder);
+    props.setTotalOrder(newTotalOrder);
+  }
 
   return (
     <section css={orderItemStyles}>
@@ -75,16 +109,18 @@ export default function OrderItem(props) {
         <h4>{props.product.productPrice}</h4>
         <br />
         <button onClick={deleteHandler}>delete Item from cart</button>
-        {/* <button onClick={updateHandler}>Change quantity</button>
+        <br />
+        <br />
+        <button onClick={displayHandler}>Change quantity</button>
 
-        <h2 css={h2Styles}>UPDATEME</h2>
-        <input
-          type="number"
-          value={newQuantity}
-          onChange={(e) => setNewQuantity(e.currentTarget.value)}
-        />
-        {newQuantity} */}
-        {/* <button onClick={}>update</button> */}
+        <section css={inputStyles} id="QuantityUpdateSection">
+          <input
+            type="number"
+            value={newQuantity}
+            onChange={(e) => setNewQuantity(e.currentTarget.value)}
+          />
+          <button onClick={updateHandler}>update</button>
+        </section>
 
         {/* <button onClick={() => deleteHandler2(props.order.productId)}>
           delete Item from cart

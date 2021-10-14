@@ -7,6 +7,7 @@ const layoutStyles = css`
   font-family: Arial, Helvetica, sans-serif;
   margin: 1%;
   border-radius: 10px;
+  background-color: beige;
 `;
 
 export default function Layout(props) {
