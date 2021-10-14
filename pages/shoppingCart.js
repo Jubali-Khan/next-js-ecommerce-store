@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import Cookies from 'js-totalOrder';
+import Cookies from 'js-cookie';
 import { useState } from 'react';
 import Layout from '../Components/Layout';
 import OrderItem from '../Components/OrderItem';
