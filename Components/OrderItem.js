@@ -1,7 +1,8 @@
 import { css } from '@emotion/react';
 import Image from 'next/image';
+import { useState } from 'react';
 import sampleImage from '../public/images/tablet.jpg';
-import { setParsedCookie } from './AddToCartSection';
+import { getParsedCookie, setParsedCookie } from './AddToCartSection';
 
 const orderItemStyles = css`
   display: flex;
@@ -39,15 +40,27 @@ const divStyle = css`
 
 export default function OrderItem(props) {
   function deleteHandler() {
-    console.log('from deleteHandler');
-    console.log('props.order.productId: ', props.order.productId);
-
     const newTotalOrder = props.totalOrder.filter(
       (orderObj) => orderObj.productId !== props.order.productId,
     );
-    console.log('newTotalOrder: ', newTotalOrder);
     setParsedCookie('totalOrder', newTotalOrder);
+    props.setTotalOrder(newTotalOrder);
   }
+
+  // const [display, setDisplay] = useState('none');
+  // function updateHandler() {
+  //   if (display === 'none') {
+  //     setDisplay('block');
+  //   } else {
+  //     setDisplay('none');
+  //   }
+  // }
+  // const h2Styles = css`
+  //   display: ${display};
+  // `;
+
+  // const [newQuantity, setNewQuantity] = useState('1');
+
   return (
     <section css={orderItemStyles}>
       <div css={divStyle}>
@@ -57,14 +70,24 @@ export default function OrderItem(props) {
         </section>
       </div>
       <section id="ButtonsSection" css={ButtonsSectionStyles}>
+        <h4>{props.order.quantity}</h4>
         <h4>{props.product.productPrice}</h4>
-        <select>
-          <option>1</option>
-          <option>1</option>
-          <option>1</option>
-        </select>
         <br />
         <button onClick={deleteHandler}>delete Item from cart</button>
+        {/* <button onClick={updateHandler}>Change quantity</button>
+
+        <h2 css={h2Styles}>UPDATEME</h2>
+        <input
+          type="number"
+          value={newQuantity}
+          onChange={(e) => setNewQuantity(e.currentTarget.value)}
+        />
+        {newQuantity} */}
+        {/* <button onClick={}>update</button> */}
+
+        {/* <button onClick={() => deleteHandler2(props.order.productId)}>
+          delete Item from cart
+        </button> // Why does the () => have a different effect than just deleteHandler2(props.order.productId)?*/}
       </section>
     </section>
   );

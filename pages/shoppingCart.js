@@ -1,11 +1,12 @@
 import { css } from '@emotion/react';
-import Cookies from 'js-cookie';
+import Cookies from 'js-totalOrder';
+import { useState } from 'react';
 import Layout from '../Components/Layout';
 import OrderItem from '../Components/OrderItem';
 import OrderSummary from '../Components/OrderSummary';
 
 // OrderItems should be generated based on the cookies
-// So we read the cookie, and find out which products are there in which amounts
+// So we read the totalOrder, and find out which products are there in which amounts
 // We then used this information to dynamically generate OrderItems
 // Each of which will be passed a prop
 
@@ -27,8 +28,9 @@ const sectionStyles = css`
 `;
 
 export default function ShoppingCart(props) {
-  const totalOrder = getParsedCookie('totalOrder') || [];
-  console.log('totalOrder in ShoppingCart: ', totalOrder);
+  const [totalOrder, setTotalOrder] = useState(
+    getParsedCookie('totalOrder') || [],
+  );
 
   return (
     <Layout>
@@ -43,11 +45,11 @@ export default function ShoppingCart(props) {
             const currentProd = props.products.find(
               (product) => product.id === order.productId,
             );
-
             return (
               <OrderItem
                 key={`OrderItem-${order.productId}`}
                 totalOrder={totalOrder}
+                setTotalOrder={setTotalOrder}
                 order={order}
                 product={currentProd}
               />
