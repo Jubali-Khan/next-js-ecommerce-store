@@ -64,6 +64,7 @@ export default function OrderItem(props) {
   return (
     <section css={orderItemStyles}>
       <div css={divStyle}>
+        {/* add link around the image */}
         <Image src={props.product.productImage} width="120px" height="120px" />
         <section id="ProductTextSection">
           <h4>{props.product.productTitle}</h4>

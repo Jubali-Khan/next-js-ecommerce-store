@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { getParsedCookie } from './AddToCartSection';
 import Footer from './Footer';
 import Header from './Header';
 
@@ -9,9 +10,10 @@ const layoutStyles = css`
 `;
 
 export default function Layout(props) {
+  const totalOrder = getParsedCookie('totalOrder') || [];
   return (
     <div css={layoutStyles}>
-      <Header />
+      <Header totalOrder={totalOrder} />
       {props.children}
       <Footer />
     </div>

@@ -22,7 +22,13 @@ const midSectionStyles = css`
   flex-direction: row;
 `;
 
-export default function Header() {
+function totalQuantityFinder(cookie) {
+  let quantity = 0;
+  cookie.forEach((order) => (quantity += order.quantity));
+  return <span>{quantity}</span>;
+}
+
+export default function Header(props) {
   return (
     <header css={headerStyle}>
       <nav css={navStyles}>
@@ -51,6 +57,7 @@ export default function Header() {
         <Link href="/shoppingCart">
           <a>
             <h3>ShoppingCart</h3>
+            {totalQuantityFinder(props.totalOrder)}
           </a>
         </Link>
       </nav>

@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import Link from 'next/link';
 
 function sumFinder(cookie, products) {
   let sum = 0;
@@ -31,11 +32,6 @@ export default function OrderSummary(props) {
     <section id="OrderSummarySection" css={orderSummarySectionStyles}>
       <div>
         <h3>Order Summary:</h3>
-        {/* <h3>
-          {props.products.map((prod) => (
-            <li key={`prod-${prod.id}`}>{prod.productTitle}</li>
-          ))}
-        </h3> */}
 
         {props.totalOrder.map((order) => {
           const currentProd = props.products.find(
@@ -51,7 +47,11 @@ export default function OrderSummary(props) {
       </div>
       <div>
         <h3>Sum: {sumFinder(props.totalOrder, props.products)}</h3>
-        <button>checkout</button>
+        <Link href="/">
+          <a>
+            <button>checkout</button>
+          </a>
+        </Link>
       </div>
     </section>
   );
