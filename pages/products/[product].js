@@ -1,10 +1,8 @@
 import { css } from '@emotion/react';
-import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import AddToCartSection from '../../Components/AddToCartSection';
 import Layout from '../../Components/Layout';
-import sampleImage from '../../public/images/tablet.jpg';
 
 const mainStyles = css`
   display: flex;
@@ -43,35 +41,51 @@ const priceStyles = css`
 `;
 
 export default function Product(props) {
-  return (
-    <Layout>
-      <main css={mainStyles}>
-        <section id="ImageSection" css={imageSectionStyles}>
-          <Image
-            src={props.currentProduct.productImage}
-            width="300px"
-            height="300px"
-          />
-        </section>
-        <section
-          id="TextAndAddToCartSection"
-          css={TextAndAddToCartSectionStyles}
-        >
-          <section id="ProductTextSection">
-            <h4 css={titleStyles}>{props.currentProduct.productTitle}</h4>
-            <h4 css={priceStyles}>{props.currentProduct.productPrice}</h4>
-            {/* <p>
+  console.log('typeof props.currentProduct: ', typeof props.currentProduct);
+  if (props.currentProduct !== null) {
+    return (
+      <Layout>
+        <main css={mainStyles}>
+          <section id="ImageSection" css={imageSectionStyles}>
+            <Image
+              src={props.currentProduct.productImage}
+              width="300px"
+              height="300px"
+            />
+          </section>
+          <section
+            id="TextAndAddToCartSection"
+            css={TextAndAddToCartSectionStyles}
+          >
+            <section id="ProductTextSection">
+              <h4 css={titleStyles}>{props.currentProduct.productTitle}</h4>
+              <h4 css={priceStyles}>{props.currentProduct.productPrice}</h4>
+              {/* <p>
               Product Description: efemkfmkl enfskjnfr neflsenfknfenfldefemkfmkl
               enfskjnfr neflsenfknfenfldefemkfmkl enfskjnfr
               neflsenfknfenfldefemkfm
             </p> */}
-            <p>{props.currentProduct.productDescription}</p>
+              <p>{props.currentProduct.productDescription}</p>
+            </section>
+            <AddToCartSection productId={props.currentProduct.id} />
           </section>
-          <AddToCartSection productId={props.currentProduct.id} />
-        </section>
-      </main>
-    </Layout>
-  );
+        </main>
+      </Layout>
+    );
+  } else {
+    return (
+      <Layout>
+        <h1>Sorry, this product doesn't exist!</h1>
+        <h3>
+          Check out our{' '}
+          <Link href="/products/">
+            <a>products</a>
+          </Link>
+          page
+        </h3>
+      </Layout>
+    );
+  }
 }
 
 export async function getServerSideProps(context) {
@@ -79,13 +93,15 @@ export async function getServerSideProps(context) {
   const { getProduct } = await import('../../util/database');
 
   const idFromURL = context.query.product;
+
   const currentProduct = await getProduct(idFromURL);
 
+  console.log(`typeof currentProduct in ${location}:`, typeof currentProduct);
   console.log(`currentProduct in ${location}:`, currentProduct);
 
   return {
     props: {
-      currentProduct,
+      currentProduct: currentProduct || null,
     },
   };
 }
