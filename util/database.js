@@ -3,6 +3,34 @@ import dotenvSafe from 'dotenv-safe';
 import Cookies from 'js-cookie';
 import postgres from 'postgres';
 
+// const CryptoJS = require('crypto-js');
+
+// const data = [{ id: 1 }, { id: 2 }];
+
+// // Encrypt
+// const ciphertext = CryptoJS.AES.encrypt(
+//   JSON.stringify(data),
+//   'secret key 123',
+// ).toString();
+
+// // Decrypt
+// const bytes = CryptoJS.AES.decrypt(ciphertext, 'secret key 123');
+// const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+// console.log(decryptedData); // [{id: 1}, {id: 2}]
+
+export function getParsedCookie(key) {
+  try {
+    return JSON.parse(Cookies.get(key));
+  } catch (err) {
+    return undefined;
+  }
+}
+
+export function setParsedCookie(key, value) {
+  Cookies.set(key, JSON.stringify(value));
+}
+
 dotenvSafe.config();
 
 // Connect only once to the database
@@ -83,15 +111,3 @@ export const productsArrayOObj = [
     img: '/../public/images/tablet3.jpg',
   },
 ];
-
-export function getParsedCookie(key) {
-  try {
-    return JSON.parse(Cookies.get(key));
-  } catch (err) {
-    return undefined;
-  }
-}
-
-export function setParsedCookie(key, value) {
-  Cookies.set(key, JSON.stringify(value));
-}

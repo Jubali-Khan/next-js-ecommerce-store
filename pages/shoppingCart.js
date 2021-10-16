@@ -28,9 +28,14 @@ const sectionStyles = css`
 `;
 
 export default function ShoppingCart(props) {
-  const [totalOrder, setTotalOrder] = useState(
+  const [tempCookie, setTempCookie] = useState(
     getParsedCookie('totalOrder') || [],
   );
+  const [totalOrder, setTotalOrder] = useState(
+    tempCookie.filter((order) => order.quantity >= 1) || [],
+  );
+  // find the order(s) in totalOrder that have less 1 in quantity and delete them
+  // filter tempCookie
 
   return (
     <Layout>

@@ -79,7 +79,7 @@ export default function AddToCartSection(props) {
       );
 
       // 4. update the quantity on the object
-      currentProductObj.quantity += Number(quantity);
+      currentProductObj.quantity = Number(quantity);
 
       // 5. insert object into array of objects
       updatedCookie.push(currentProductObj);
@@ -91,6 +91,7 @@ export default function AddToCartSection(props) {
   }
   return (
     <section css={addToCartSectionStyles} id="AddToCartSection">
+      {/* an input type=number might be more appropriate in this context */}
       <select
         value={quantity}
         onChange={(e) => {

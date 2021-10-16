@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { getParsedCookie } from './AddToCartSection';
+import { getParsedCookie } from './AddToCartSection'; // what up with the cookie imports?
 import Footer from './Footer';
 import Header from './Header';
 

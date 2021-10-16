@@ -1,8 +1,7 @@
 import { css } from '@emotion/react';
 import Image from 'next/image';
 import { useState } from 'react';
-import sampleImage from '../public/images/tablet.jpg';
-import { getParsedCookie, setParsedCookie } from './AddToCartSection';
+import { setParsedCookie } from './AddToCartSection';
 
 const orderItemStyles = css`
   display: flex;
@@ -109,10 +108,6 @@ export default function OrderItem(props) {
           />
           <button onClick={updateHandler}>update</button>
         </section>
-
-        {/* <button onClick={() => deleteHandler2(props.order.productId)}>
-          delete Item from cart
-        </button> // Why does the () => have a different effect than just deleteHandler2(props.order.productId)?*/}
       </section>
     </section>
   );
