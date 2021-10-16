@@ -8,7 +8,7 @@ const footerStyles = css`
   justify-content: space-between;
   background-color: lightgray;
   border-radius: 10px;
-  margin: 1%;
+  margin: 3% 1%;
 `;
 
 const linksSectionStyles = css`

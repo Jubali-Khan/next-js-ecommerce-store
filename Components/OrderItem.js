@@ -65,19 +65,6 @@ export default function OrderItem(props) {
 
   const [newQuantity, setNewQuantity] = useState('1');
 
-  /*
-  <OrderItem
-
-    totalOrder={totalOrder}
-    setTotalOrder={setTotalOrder}
-
-    order={order}
-    // {productId: .. , quantity: ..}
-
-    product={currentProd}
-    // { id: .. , name: ' .. ', desc: ' .. ', price:  1000, img: ' .. ',}
-  />
-  */
   function updateHandler() {
     const newTotalOrder = props.totalOrder.filter(
       (orderElement) => orderElement.productId !== props.order.productId,
@@ -116,6 +103,7 @@ export default function OrderItem(props) {
         <section css={inputStyles} id="QuantityUpdateSection">
           <input
             type="number"
+            min="1"
             value={newQuantity}
             onChange={(e) => setNewQuantity(e.currentTarget.value)}
           />

@@ -46,6 +46,7 @@ export default function AddToCartSection(props) {
       };
       // 2. if there isn't, create one
       setParsedCookie('totalOrder', [orderObjTemplate]);
+      props.setTotalOrder('totalOrder', [orderObjTemplate]);
       console.log('cookie been set');
     } else {
       // 0. We start by creating the template object for this product
@@ -85,6 +86,7 @@ export default function AddToCartSection(props) {
 
       // 6. update totalOrder with the new value
       setParsedCookie('totalOrder', updatedCookie);
+      props.setTotalOrder('totalOrder', updatedCookie);
     }
   }
   return (

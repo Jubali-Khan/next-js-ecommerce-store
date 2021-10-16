@@ -1,7 +1,10 @@
 import { css } from '@emotion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import AddToCartSection from '../../Components/AddToCartSection';
+import { useState } from 'react';
+import AddToCartSection, {
+  getParsedCookie,
+} from '../../Components/AddToCartSection';
 import Layout from '../../Components/Layout';
 
 const mainStyles = css`
@@ -41,7 +44,12 @@ const priceStyles = css`
 `;
 
 export default function Product(props) {
+  const [totalOrder, setTotalOrder] = useState(
+    getParsedCookie('totalOrder') || [],
+  );
+
   console.log('typeof props.currentProduct: ', typeof props.currentProduct);
+
   if (props.currentProduct !== null) {
     return (
       <Layout>
@@ -67,7 +75,11 @@ export default function Product(props) {
             </p> */}
               <p>{props.currentProduct.productDescription}</p>
             </section>
-            <AddToCartSection productId={props.currentProduct.id} />
+            <AddToCartSection
+              totalOrder={totalOrder}
+              setTotalOrder={setTotalOrder}
+              productId={props.currentProduct.id}
+            />
           </section>
         </main>
       </Layout>

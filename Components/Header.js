@@ -5,7 +5,7 @@ import logo from '../public/favicon.ico';
 
 const headerStyle = css`
   display: flex;
-  background-color: lightgreen;
+  background-color: lightblue;
   border-radius: 10px;
   margin: 1%;
 `;
