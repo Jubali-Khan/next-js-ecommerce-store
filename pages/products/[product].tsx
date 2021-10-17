@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -43,7 +44,19 @@ const priceStyles = css`
   padding: 1%;
 `;
 
-export default function Product(props) {
+type CurrentProduct = {
+  id: number;
+  productTitle: string;
+  productDescription: string;
+  productPrice: number;
+  productImage: string;
+};
+
+type Props = {
+  currentProduct: CurrentProduct | null;
+};
+
+export default function Product(props: Props) {
   const [totalOrder, setTotalOrder] = useState(
     getParsedCookie('totalOrder') || [],
   );
@@ -68,11 +81,6 @@ export default function Product(props) {
             <section id="ProductTextSection">
               <h4 css={titleStyles}>{props.currentProduct.productTitle}</h4>
               <h4 css={priceStyles}>{props.currentProduct.productPrice}</h4>
-              {/* <p>
-              Product Description: efemkfmkl enfskjnfr neflsenfknfenfldefemkfmkl
-              enfskjnfr neflsenfknfenfldefemkfmkl enfskjnfr
-              neflsenfknfenfldefemkfm
-            </p> */}
               <p>{props.currentProduct.productDescription}</p>
             </section>
             <AddToCartSection
@@ -100,10 +108,11 @@ export default function Product(props) {
   }
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const location = 'gSSP in products/[product].js';
   const { getProduct } = await import('../../util/database');
 
+  console.log('typeof context: ', typeof context);
   const idFromURL = context.query.product;
 
   const currentProduct = await getProduct(idFromURL);

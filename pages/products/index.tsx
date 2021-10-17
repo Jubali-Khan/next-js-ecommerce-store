@@ -14,7 +14,17 @@ const productsSectionStyles = css`
   padding: 20px 0px;
 `;
 
-export default function Products(props) {
+type Props = {
+  products: {
+    id: number;
+    productTitle: string;
+    productDescription: string;
+    productPrice: number;
+    productImage: string;
+  }[];
+};
+
+export default function Products(props: Props) {
   return (
     <Layout>
       <Head>
@@ -22,11 +32,6 @@ export default function Products(props) {
       </Head>
       <div>Products Page!</div>
       <section css={productsSectionStyles}>
-        {/* <ProductItem product={props.productsArrayOObj[0]} />
-        <ProductItem product={props.productsArrayOObj[0]} />
-        <ProductItem product={props.productsArrayOObj[0]} /> */}
-
-        {/* {console.log(props.products)} */}
         {props.products.map((productObj) => (
           <ProductItem
             key={`ProductItem-id${productObj.id}`}
