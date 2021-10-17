@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
+import cookieUpdater from '../util/CookieUpdater';
 
 const addToCartSectionStyles = css`
   border: 1px solid black;
@@ -49,41 +50,12 @@ export default function AddToCartSection(props) {
       props.setTotalOrder('totalOrder', [orderObjTemplate]);
       console.log('cookie been set');
     } else {
-      // 0. We start by creating the template object for this product
-      const orderObjToUpdate = {
-        productId: props.productId,
-        quantity: 0,
-      };
-
-      // 1. If the cookie doesn't already have the order obj for this product, we push it to the cookie
-      if (
-        !presentCookieArrOObj.find(
-          (orderObj) => orderObj.productId === props.productId,
-        )
-      ) {
-        presentCookieArrOObj.push(orderObjToUpdate);
-        console.log('IN IF presentCookieArrOObj: ', presentCookieArrOObj);
-      }
-
-      // 2. We then update totalOrder to a cookie that we can access and whose order quantity we can manipulate
-      setParsedCookie('totalOrder', presentCookieArrOObj);
-
-      // 3.1 split totalOrder into a singular object
-      const currentProductObj = presentCookieArrOObj.find(
-        (order) => order.productId === props.productId,
+      const updatedCookie = cookieUpdater(
+        presentCookieArrOObj,
+        props.productId,
+        quantity,
       );
-
-      // 3.2 store the remainder of totalOrder in a variable
-      const updatedCookie = presentCookieArrOObj.filter(
-        (order) => order.productId !== props.productId,
-      );
-
-      // 4. update the quantity on the object
-      currentProductObj.quantity = Number(quantity);
-
-      // 5. insert object into array of objects
-      updatedCookie.push(currentProductObj);
-
+      console.log('updatedCookie: ', updatedCookie);
       // 6. update totalOrder with the new value
       setParsedCookie('totalOrder', updatedCookie);
       props.setTotalOrder('totalOrder', updatedCookie);
