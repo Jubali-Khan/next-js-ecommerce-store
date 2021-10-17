@@ -1,13 +1,30 @@
 import { css } from '@emotion/react';
 import Link from 'next/link';
 
-function sumFinder(cookie, products) {
+type CookieOrder = {
+  productId: number;
+  quantity: number;
+};
+type Product = {
+  id: number;
+  productTitle: string;
+  productDescription: string;
+  productPrice: number;
+  productImage: string;
+};
+
+type Props = {
+  totalOrder: CookieOrder[];
+  products: Product[];
+};
+
+function sumFinder(cookie: CookieOrder[], products: Product[]) {
   let sum = 0;
 
   cookie.forEach((order) => {
     const currentProd = products.find(
       (product) => product.id === order.productId,
-    );
+    ) || { productPrice: 0 };
     const currentProdPrice = currentProd.productPrice;
     sum += order.quantity * currentProdPrice;
   });
@@ -27,7 +44,7 @@ const orderSummarySectionStyles = css`
   border-radius: 10px;
 `;
 
-export default function OrderSummary(props) {
+export default function OrderSummary(props: Props) {
   return (
     <section id="OrderSummarySection" css={orderSummarySectionStyles}>
       <div>
@@ -36,8 +53,8 @@ export default function OrderSummary(props) {
         {props.totalOrder.map((order) => {
           const currentProd = props.products.find(
             (product) => product.id === order.productId,
-          );
-          const currentProdTitle = currentProd.productTitle;
+          ) || { productTitle: 'unidentified string' };
+          const currentProdTitle: string = currentProd.productTitle;
           return (
             <li key={`product-${order.productId}`}>
               {currentProdTitle} x {order.quantity}

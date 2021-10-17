@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import Image from 'next/image';
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
+import { CookieOrder, Product } from '../pages/shoppingCart';
 import { setParsedCookie } from './AddToCartSection';
 
 const orderItemStyles = css`
@@ -37,7 +38,27 @@ const divStyle = css`
   border: 1px solid black;
 `;
 
-export default function OrderItem(props) {
+// type CookieOrder = {
+//   productId: number;
+//   quantity: number;
+// };
+
+// type Product = {
+//   id: number;
+//   productTitle: string;
+//   productDescription: string;
+//   productPrice: number;
+//   productImage: string;
+// };
+
+type Props = {
+  totalOrder: CookieOrder[];
+  order: CookieOrder;
+  product: Product;
+  setTotalOrder: React.Dispatch<SetStateAction<CookieOrder[]>>;
+};
+
+export default function OrderItem(props: Props) {
   function deleteHandler() {
     const newTotalOrder = props.totalOrder.filter(
       (orderObj) => orderObj.productId !== props.order.productId,

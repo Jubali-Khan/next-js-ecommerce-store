@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/babel-plugin": "^11.3.0",
     "@emotion/react": "^11.4.1",
+    "@types/js-cookie": "^3.0.0",
     "camelcase-keys": "^7.0.1",
     "dotenv-safe": "^8.2.0",
     "fs": "^0.0.1-security",

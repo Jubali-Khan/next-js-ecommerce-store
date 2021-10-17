@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
-import Cookies from 'js-cookie';
 import { useState } from 'react';
+import { getParsedCookie } from '../Components/AddToCartSection';
 import Layout from '../Components/Layout';
 import OrderItem from '../Components/OrderItem';
 import OrderSummary from '../Components/OrderSummary';
@@ -9,14 +9,6 @@ import OrderSummary from '../Components/OrderSummary';
 // So we read the totalOrder, and find out which products are there in which amounts
 // We then used this information to dynamically generate OrderItems
 // Each of which will be passed a prop
-
-export function getParsedCookie(key) {
-  try {
-    return JSON.parse(Cookies.get(key));
-  } catch (err) {
-    return undefined;
-  }
-}
 
 const sectionStyles = css`
   display: flex;
@@ -27,15 +19,30 @@ const sectionStyles = css`
   align-content: stretch;
 `;
 
-export default function ShoppingCart(props) {
-  const [tempCookie, setTempCookie] = useState(
+export type Product = {
+  id: number;
+  productTitle: string;
+  productDescription: string;
+  productPrice: number;
+  productImage: string;
+};
+
+type Props = {
+  products: Product[];
+};
+
+export type CookieOrder = {
+  productId: number;
+  quantity: number;
+};
+
+export default function ShoppingCart(props: Props) {
+  const [tempCookie, setTempCookie] = useState<CookieOrder[]>(
     getParsedCookie('totalOrder') || [],
   );
   const [totalOrder, setTotalOrder] = useState(
     tempCookie.filter((order) => order.quantity >= 1) || [],
   );
-  // find the order(s) in totalOrder that have less 1 in quantity and delete them
-  // filter tempCookie
 
   return (
     <Layout>
@@ -49,13 +56,14 @@ export default function ShoppingCart(props) {
           {totalOrder.map((order) => {
             const currentProd = props.products.find(
               (product) => product.id === order.productId,
-            );
+            )!;
             return (
               <OrderItem
                 key={`OrderItem-${order.productId}`}
                 totalOrder={totalOrder}
                 setTotalOrder={setTotalOrder}
                 order={order}
+                // error under product if || {...} from under map() is removed (if you use non-null assertion operator)
                 product={currentProd}
               />
             );

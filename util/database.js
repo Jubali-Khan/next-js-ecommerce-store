@@ -19,18 +19,6 @@ import postgres from 'postgres';
 
 // console.log(decryptedData); // [{id: 1}, {id: 2}]
 
-export function getParsedCookie(key) {
-  try {
-    return JSON.parse(Cookies.get(key));
-  } catch (err) {
-    return undefined;
-  }
-}
-
-export function setParsedCookie(key, value) {
-  Cookies.set(key, JSON.stringify(value));
-}
-
 dotenvSafe.config();
 
 // Connect only once to the database
@@ -86,6 +74,18 @@ export async function getProduct(id) {
   console.log('product from database: ', product[0]);
   // What do we return?
   return camelcaseKeys(product[0]);
+}
+
+export function getParsedCookie(key) {
+  try {
+    return JSON.parse(Cookies.get(key));
+  } catch (err) {
+    return undefined;
+  }
+}
+
+export function setParsedCookie(key, value) {
+  Cookies.set(key, JSON.stringify(value));
 }
 
 export const productsArrayOObj = [
