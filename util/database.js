@@ -76,6 +76,10 @@ export async function getProduct(id) {
   return camelcaseKeys(product[0]);
 }
 
+//
+//
+//
+//
 export function getParsedCookie(key) {
   try {
     return JSON.parse(Cookies.get(key));
@@ -87,6 +91,10 @@ export function getParsedCookie(key) {
 export function setParsedCookie(key, value) {
   Cookies.set(key, JSON.stringify(value));
 }
+//
+//
+//
+//
 
 export const productsArrayOObj = [
   {

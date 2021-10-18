@@ -1,28 +1,12 @@
 import { css } from '@emotion/react';
-import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
+import { getParsedCookie, setParsedCookie } from '../util/cookies';
 import cookieUpdater from '../util/CookieUpdater';
 
 const addToCartSectionStyles = css`
   border: 1px solid black;
   padding: 5%;
 `;
-
-//
-//
-export function getParsedCookie(key) {
-  try {
-    return JSON.parse(Cookies.get(key));
-  } catch (err) {
-    return undefined;
-  }
-}
-
-export function setParsedCookie(key, value) {
-  Cookies.set(key, JSON.stringify(value));
-}
-//
-//
 
 //
 //

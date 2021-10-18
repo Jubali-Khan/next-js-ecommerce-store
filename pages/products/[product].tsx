@@ -3,10 +3,9 @@ import { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import AddToCartSection, {
-  getParsedCookie,
-} from '../../Components/AddToCartSection';
+import AddToCartSection from '../../Components/AddToCartSection';
 import Layout from '../../Components/Layout';
+import { getParsedCookie } from '../../util/cookies';
 
 const mainStyles = css`
   display: flex;
@@ -109,16 +108,15 @@ export default function Product(props: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const location = 'gSSP in products/[product].js';
   const { getProduct } = await import('../../util/database');
 
-  console.log('typeof context: ', typeof context);
   const idFromURL = context.query.product;
 
   const currentProduct = await getProduct(idFromURL);
 
-  console.log(`typeof currentProduct in ${location}:`, typeof currentProduct);
-  console.log(`currentProduct in ${location}:`, currentProduct);
+  // const location = 'gSSP in products/[product].js';
+  // console.log(`typeof currentProduct in ${location}:`, typeof currentProduct);
+  // console.log(`currentProduct in ${location}:`, currentProduct);
 
   return {
     props: {

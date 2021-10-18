@@ -1,9 +1,10 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
-import { getParsedCookie } from '../Components/AddToCartSection';
 import Layout from '../Components/Layout';
 import OrderItem from '../Components/OrderItem';
 import OrderSummary from '../Components/OrderSummary';
+// import { getParsedCookie } from '../Components/AddToCartSection';
+import { getParsedCookie } from '../util/cookies';
 
 // OrderItems should be generated based on the cookies
 // So we read the totalOrder, and find out which products are there in which amounts
@@ -56,7 +57,10 @@ export default function ShoppingCart(props: Props) {
           {totalOrder.map((order) => {
             const currentProd = props.products.find(
               (product) => product.id === order.productId,
-            )!;
+            );
+            if (currentProd === undefined) {
+              return null;
+            }
             return (
               <OrderItem
                 key={`OrderItem-${order.productId}`}
